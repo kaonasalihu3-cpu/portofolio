@@ -32,3 +32,23 @@ function active_nav(string $page): string
     $current = basename($_SERVER['PHP_SELF']);
     return $current === $page ? 'active' : '';
 }
+
+function request_method(): string
+{
+    return strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+}
+
+function is_post(): bool
+{
+    return request_method() === 'POST';
+}
+
+function old_input(string $key, string $default = ''): string
+{
+    return e((string) ($_POST[$key] ?? $default));
+}
+
+function flash_message(string $key): ?string
+{
+    return Session::flash($key);
+}
