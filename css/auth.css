@@ -1,0 +1,4 @@
+/* Auth page specific overrides */
+.auth-box {
+  max-width: 520px;
+}
