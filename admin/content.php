@@ -10,6 +10,7 @@ $sections = $contentModel->getAll();
 
 $pageTitle = 'Manage Site Content | ' . APP_NAME;
 require_once dirname(__DIR__) . '/includes/header.php';
+$success = flash_message('success');
 ?>
 <section class="section-block">
     <div class="container">
@@ -17,6 +18,10 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <h1>Site Content</h1>
             <p class="muted">Edit page sections from database records.</p>
         </div>
+
+        <?php if ($success): ?>
+            <div class="alert success"><?= e($success); ?></div>
+        <?php endif; ?>
 
         <div class="admin-table-wrap">
             <table class="admin-table">
@@ -26,6 +31,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <th>Section</th>
                         <th>Title</th>
                         <th>Updated By</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +41,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <td><?= e($section['section_key']); ?></td>
                         <td><?= e($section['title']); ?></td>
                         <td><?= e((string) ($section['updated_by_name'] ?? '-')); ?></td>
+                        <td><a class="btn" href="<?= e(app_url('admin/edit-content.php?id=' . (int) $section['id'])); ?>">Edit</a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
