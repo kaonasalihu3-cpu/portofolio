@@ -25,6 +25,28 @@ if (is_post()) {
     ];
 
     $errors = Validator::validateContent($form, false);
+
+    $imageError = null;
+    $pdfError = null;
+    $uploadedImage = FileUpload::uploadImage($_FILES['image_file'] ?? [], $imageError);
+    $uploadedPdf = FileUpload::uploadPdf($_FILES['pdf_file_upload'] ?? [], $pdfError);
+
+    if ($imageError !== null) {
+        $errors['image_file'] = $imageError;
+    } elseif ($uploadedImage !== null) {
+        $form['image'] = $uploadedImage;
+    } elseif ($form['image'] === '') {
+        $form['image'] = (string) ($post['image'] ?? '');
+    }
+
+    if ($pdfError !== null) {
+        $errors['pdf_file_upload'] = $pdfError;
+    } elseif ($uploadedPdf !== null) {
+        $form['pdf_file'] = $uploadedPdf;
+    } elseif ($form['pdf_file'] === '') {
+        $form['pdf_file'] = (string) ($post['pdf_file'] ?? '');
+    }
+
     if (empty($errors)) {
         $user = current_user();
         $saved = $newsModel->update($id, $form, (int) $user['id']);
@@ -43,7 +65,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="container form-wrap">
         <h1>Edit News</h1>
         <?php if (!empty($errors['general'])): ?><div class="alert error"><?= e($errors['general']); ?></div><?php endif; ?>
-        <form method="post" novalidate>
+        <form method="post" enctype="multipart/form-data" novalidate>
             <label>Title</label>
             <input name="title" value="<?= e((string) $form['title']); ?>">
             <small class="error-text"><?= e($errors['title'] ?? ''); ?></small>
@@ -54,9 +76,15 @@ require_once dirname(__DIR__) . '/includes/header.php';
 
             <label>Image Path</label>
             <input name="image" value="<?= e((string) ($form['image'] ?? '')); ?>">
+            <label>Upload Image</label>
+            <input name="image_file" type="file" accept=".jpg,.jpeg,.png,.webp">
+            <small class="error-text"><?= e($errors['image_file'] ?? ''); ?></small>
 
             <label>PDF Path</label>
             <input name="pdf_file" value="<?= e((string) ($form['pdf_file'] ?? '')); ?>">
+            <label>Upload PDF</label>
+            <input name="pdf_file_upload" type="file" accept=".pdf">
+            <small class="error-text"><?= e($errors['pdf_file_upload'] ?? ''); ?></small>
 
             <button class="btn btn-primary" type="submit">Update News</button>
         </form>
