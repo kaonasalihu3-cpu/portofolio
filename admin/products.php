@@ -36,7 +36,11 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <td><?= e((string) ($item['updated_by_name'] ?? '-')); ?></td>
                         <td>
                             <a class="btn" href="<?= e(app_url('admin/edit-product.php?id=' . (int) $item['id'])); ?>">Edit</a>
-                            <a class="btn" href="<?= e(app_url('admin/delete-product.php?id=' . (int) $item['id'])); ?>">Delete</a>
+                            <form class="inline-form" method="post" action="<?= e(app_url('admin/delete-product.php')); ?>">
+                                <?= csrf_input(); ?>
+                                <input type="hidden" name="id" value="<?= (int) $item['id']; ?>">
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>

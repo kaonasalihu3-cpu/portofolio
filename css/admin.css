@@ -50,6 +50,15 @@
   border-bottom: 1px solid var(--border);
 }
 
+.inline-form {
+  display: inline-block;
+  margin: 0;
+}
+
+.inline-form .btn {
+  margin-top: 0;
+}
+
 @media (min-width: 768px) {
   .admin-stats {
     grid-template-columns: repeat(2, 1fr);

@@ -52,3 +52,24 @@ function flash_message(string $key): ?string
 {
     return Session::flash($key);
 }
+
+function csrf_token(): string
+{
+    $token = Session::get('_csrf_token');
+    if (!is_string($token) || $token === '') {
+        $token = bin2hex(random_bytes(32));
+        Session::set('_csrf_token', $token);
+    }
+    return $token;
+}
+
+function csrf_input(): string
+{
+    return '<input type="hidden" name="_csrf" value="' . e(csrf_token()) . '">';
+}
+
+function verify_csrf(?string $token): bool
+{
+    $stored = Session::get('_csrf_token');
+    return is_string($stored) && is_string($token) && hash_equals($stored, $token);
+}

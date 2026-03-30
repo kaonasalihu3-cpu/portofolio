@@ -7,8 +7,8 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
 $pdo = Database::getInstance()->getConnection();
 $messageModel = new ContactMessage($pdo);
 
-$markReadId = (int) ($_GET['read'] ?? 0);
-if ($markReadId > 0) {
+$markReadId = (int) ($_POST['read_id'] ?? 0);
+if (is_post() && verify_csrf($_POST['_csrf'] ?? null) && $markReadId > 0) {
     $messageModel->markRead($markReadId);
     redirect('admin/messages.php');
 }
@@ -47,7 +47,11 @@ require_once dirname(__DIR__) . '/includes/header.php';
                         <td><?= (int) $msg['is_read'] === 1 ? 'Read' : 'Unread'; ?></td>
                         <td>
                             <?php if ((int) $msg['is_read'] === 0): ?>
-                                <a class="btn" href="<?= e(app_url('admin/messages.php?read=' . (int) $msg['id'])); ?>">Mark Read</a>
+                                <form class="inline-form" method="post" action="<?= e(app_url('admin/messages.php')); ?>">
+                                    <?= csrf_input(); ?>
+                                    <input type="hidden" name="read_id" value="<?= (int) $msg['id']; ?>">
+                                    <button class="btn" type="submit">Mark Read</button>
+                                </form>
                             <?php else: ?>
                                 <span class="muted">Done</span>
                             <?php endif; ?>
