@@ -12,7 +12,11 @@ $id = (int) ($_POST['id'] ?? 0);
 if ($id > 0) {
     $pdo = Database::getInstance()->getConnection();
     $productModel = new Product($pdo);
-    $productModel->delete($id);
+    if ($productModel->delete($id)) {
+        Session::flash('success', 'Product deleted successfully.');
+    } else {
+        Session::flash('error', 'Product could not be deleted.');
+    }
 }
 
 redirect('admin/products.php');

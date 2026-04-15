@@ -10,6 +10,7 @@ $messageModel = new ContactMessage($pdo);
 $markReadId = (int) ($_POST['read_id'] ?? 0);
 if (is_post() && verify_csrf($_POST['_csrf'] ?? null) && $markReadId > 0) {
     $messageModel->markRead($markReadId);
+    Session::flash('success', 'Message marked as read.');
     redirect('admin/messages.php');
 }
 
@@ -17,6 +18,7 @@ $messages = $messageModel->getAll();
 
 $pageTitle = 'Contact Messages | ' . APP_NAME;
 require_once dirname(__DIR__) . '/includes/header.php';
+$success = flash_message('success');
 ?>
 <section class="section-block">
     <div class="container">
@@ -24,6 +26,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <h1>Contact Messages</h1>
             <p class="muted">Review incoming messages from the website.</p>
         </div>
+        <?php if ($success): ?><div class="alert success"><?= e($success); ?></div><?php endif; ?>
 
         <div class="admin-table-wrap">
             <table class="admin-table">

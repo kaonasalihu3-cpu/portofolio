@@ -12,7 +12,11 @@ $id = (int) ($_POST['id'] ?? 0);
 if ($id > 0) {
     $pdo = Database::getInstance()->getConnection();
     $newsModel = new News($pdo);
-    $newsModel->delete($id);
+    if ($newsModel->delete($id)) {
+        Session::flash('success', 'News post deleted successfully.');
+    } else {
+        Session::flash('error', 'News post could not be deleted.');
+    }
 }
 
 redirect('admin/news.php');

@@ -16,9 +16,13 @@ $latestNews = $newsModel->getLatest(3);
 
 $pageTitle = 'Home | ' . APP_NAME;
 require_once __DIR__ . '/includes/header.php';
+$success = flash_message('success');
+$error = flash_message('error');
 ?>
 <section class="hero-section">
     <div class="container hero-grid">
+        <?php if ($success): ?><div class="alert success"><?= e($success); ?></div><?php endif; ?>
+        <?php if ($error): ?><div class="alert error"><?= e($error); ?></div><?php endif; ?>
         <div>
             <span class="kicker">Welcome</span>
             <h1><?= e($hero['title'] ?? APP_NAME); ?></h1>

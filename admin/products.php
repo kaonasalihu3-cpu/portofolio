@@ -10,6 +10,8 @@ $items = $productModel->getAll();
 
 $pageTitle = 'Manage Products | ' . APP_NAME;
 require_once dirname(__DIR__) . '/includes/header.php';
+$success = flash_message('success');
+$error = flash_message('error');
 ?>
 <section class="section-block">
     <div class="container">
@@ -17,6 +19,8 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <h1>Products</h1>
             <a class="btn btn-primary" href="<?= e(app_url('admin/create-product.php')); ?>">Create Product</a>
         </div>
+        <?php if ($success): ?><div class="alert success"><?= e($success); ?></div><?php endif; ?>
+        <?php if ($error): ?><div class="alert error"><?= e($error); ?></div><?php endif; ?>
 
         <div class="admin-table-wrap">
             <table class="admin-table">
