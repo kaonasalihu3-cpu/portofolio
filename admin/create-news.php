@@ -59,7 +59,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="container form-wrap">
         <h1>Create News</h1>
         <?php if (!empty($errors['general'])): ?><div class="alert error"><?= e($errors['general']); ?></div><?php endif; ?>
-        <form method="post" enctype="multipart/form-data" novalidate>
+        <form id="admin-news-create-form" method="post" enctype="multipart/form-data" novalidate>
             <label>Title</label>
             <input name="title" value="<?= e($form['title']); ?>">
             <small class="error-text"><?= e($errors['title'] ?? ''); ?></small>

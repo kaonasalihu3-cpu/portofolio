@@ -66,7 +66,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="container form-wrap">
         <h1>Edit Product</h1>
         <?php if (!empty($errors['general'])): ?><div class="alert error"><?= e($errors['general']); ?></div><?php endif; ?>
-        <form method="post" enctype="multipart/form-data" novalidate>
+        <form id="admin-product-edit-form" method="post" enctype="multipart/form-data" novalidate>
             <label>Title</label>
             <input name="title" value="<?= e((string) $form['title']); ?>">
             <small class="error-text"><?= e($errors['title'] ?? ''); ?></small>

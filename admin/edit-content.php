@@ -59,7 +59,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
     <div class="container form-wrap">
         <h1>Edit Site Content</h1>
         <?php if (!empty($errors['general'])): ?><div class="alert error"><?= e($errors['general']); ?></div><?php endif; ?>
-        <form method="post" novalidate>
+        <form id="admin-content-edit-form" method="post" novalidate>
             <label>Page Key</label>
             <input name="page_key" value="<?= e((string) $form['page_key']); ?>">
             <small class="error-text"><?= e($errors['page_key'] ?? ''); ?></small>
