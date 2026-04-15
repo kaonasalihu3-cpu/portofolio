@@ -52,6 +52,15 @@ body {
   flex-wrap: wrap;
 }
 
+.nav-toggle {
+  display: none;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.45rem 0.75rem;
+  font-weight: 600;
+}
+
 .main-nav a {
   text-decoration: none;
   color: var(--secondary);
@@ -187,6 +196,27 @@ input, textarea {
   gap: 1rem;
   flex-wrap: wrap;
   padding: 1.5rem 0;
+}
+
+@media (max-width: 767px) {
+  .nav-toggle {
+    display: inline-block;
+  }
+
+  .nav-wrap {
+    flex-wrap: wrap;
+  }
+
+  .main-nav {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+
+  .main-nav.open {
+    display: flex;
+  }
 }
 
 @media (min-width: 768px) {

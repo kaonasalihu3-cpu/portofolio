@@ -6,8 +6,9 @@ $user = current_user();
 <header class="site-header">
     <div class="container nav-wrap">
         <a class="brand" href="<?= e(app_url('index.php')); ?>"><?= e(APP_NAME); ?></a>
+        <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
 
-        <nav class="main-nav" aria-label="Primary">
+        <nav id="primary-nav" class="main-nav" aria-label="Primary">
             <a class="<?= e(active_nav('index.php')); ?>" href="<?= e(app_url('index.php')); ?>">Home</a>
             <a class="<?= e(active_nav('about.php')); ?>" href="<?= e(app_url('about.php')); ?>">About</a>
             <a class="<?= e(active_nav('products.php')); ?>" href="<?= e(app_url('products.php')); ?>">Products</a>
