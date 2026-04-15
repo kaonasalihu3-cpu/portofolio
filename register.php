@@ -42,7 +42,7 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section-block">
     <div class="container form-wrap auth-box">
         <h1>Register</h1>
-        <form method="post" novalidate>
+        <form id="register-form" method="post" novalidate>
             <label for="full_name">Full Name</label>
             <input id="full_name" name="full_name" type="text" value="<?= e($form['full_name']); ?>">
             <small class="error-text"><?= e($errors['full_name'] ?? ''); ?></small>

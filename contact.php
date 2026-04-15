@@ -51,7 +51,7 @@ $success = flash_message('success');
             <div class="alert error"><?= e($errors['general']); ?></div>
         <?php endif; ?>
 
-        <form method="post" novalidate>
+        <form id="contact-form" method="post" novalidate>
             <label for="name">Name</label>
             <input id="name" name="name" type="text" value="<?= e($form['name']); ?>">
             <small class="error-text"><?= e($errors['name'] ?? ''); ?></small>

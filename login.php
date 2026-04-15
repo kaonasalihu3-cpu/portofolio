@@ -33,7 +33,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php if (!empty($errors['general'])): ?>
             <div class="alert error"><?= e($errors['general']); ?></div>
         <?php endif; ?>
-        <form method="post" novalidate>
+        <form id="login-form" method="post" novalidate>
             <label for="email">Email</label>
             <input id="email" name="email" type="email" value="<?= e($email); ?>">
             <small class="error-text"><?= e($errors['email'] ?? ''); ?></small>
