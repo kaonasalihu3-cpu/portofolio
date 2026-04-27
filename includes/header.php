@@ -23,10 +23,11 @@ $pageTitle = $pageTitle ?? APP_NAME;
 </head>
 <body>
 <div class="site-shell">
+<a class="skip-link" href="#main-content">Skip to content</a>
 <?php
 $navbarFile = __DIR__ . '/navbar.php';
 if (file_exists($navbarFile)) {
     require $navbarFile;
 }
 ?>
-<main class="site-main">
+<main id="main-content" class="site-main" tabindex="-1">
