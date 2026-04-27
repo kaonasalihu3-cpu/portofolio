@@ -111,3 +111,75 @@ Accepted file types:
 8. CRUD implementation
 9. Validation and uploads
 10. Responsive polish and documentation
+
+## 10) Implemented Pages
+
+Public:
+
+- `index.php`
+- `about.php`
+- `products.php`
+- `product-details.php`
+- `news.php`
+- `news-details.php`
+- `contact.php`
+- `login.php`
+- `register.php`
+- `logout.php`
+
+Admin:
+
+- `admin/dashboard.php`
+- `admin/users.php`
+- `admin/messages.php`
+- `admin/content.php`
+- `admin/edit-content.php`
+- `admin/products.php`
+- `admin/create-product.php`
+- `admin/edit-product.php`
+- `admin/delete-product.php`
+- `admin/news.php`
+- `admin/create-news.php`
+- `admin/edit-news.php`
+- `admin/delete-news.php`
+- `admin/logout.php`
+
+## 11) Validation Coverage
+
+- Frontend JS:
+  - contact form validation
+  - login/register validation
+  - admin create/edit form validation
+- Backend PHP:
+  - auth validation
+  - contact validation
+  - content/product/news validation
+  - CSRF checks for destructive admin actions
+
+## 12) Collaborator Push Workflow
+
+Use repository-level identity before pushing:
+
+```bash
+git config user.name "kaonasalihu3-cpu"
+git config user.email "kaonasalihu3@gmail.com"
+```
+
+or:
+
+```bash
+git config user.name "olisashabani1"
+git config user.email "olisashabani06@gmail.com"
+```
+
+Push command used in this project:
+
+```bash
+git push https://github.com/kaonasalihu3-cpu/portofolio.git main:main
+```
+
+## 13) Troubleshooting
+
+- If SSH remote fails with `Permission denied (publickey)`, verify the correct SSH key is added to the matching GitHub account.
+- If admin pages redirect, confirm you are logged in as an `admin` role user.
+- If dynamic content does not load, verify DB credentials in `config/config.php` and re-import `database/schema.sql` + `database/seed.sql`.
