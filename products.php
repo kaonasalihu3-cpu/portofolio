@@ -3,9 +3,15 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config/config.php';
 
-$pdo = Database::getInstance()->getConnection();
-$productModel = new Product($pdo);
-$products = $productModel->getAll();
+$products = [];
+$loadError = null;
+try {
+    $pdo = Database::getInstance()->getConnection();
+    $productModel = new Product($pdo);
+    $products = $productModel->getAll();
+} catch (Throwable $e) {
+    $loadError = 'Products are temporarily unavailable.';
+}
 
 $pageTitle = 'Products | ' . APP_NAME;
 require_once __DIR__ . '/includes/header.php';
@@ -16,6 +22,7 @@ require_once __DIR__ . '/includes/header.php';
             <h1>Products & Portfolio</h1>
             <p class="muted">Explore practical projects and product ideas.</p>
         </div>
+        <?php if ($loadError): ?><div class="alert error"><?= e($loadError); ?></div><?php endif; ?>
 
         <div class="card-grid">
             <?php foreach ($products as $item): ?>

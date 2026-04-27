@@ -3,10 +3,15 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config/config.php';
 
-$pdo = Database::getInstance()->getConnection();
-$siteContentModel = new SiteContent($pdo);
-
-$sections = $siteContentModel->getSectionsByPage('about');
+$sections = [];
+$loadError = null;
+try {
+    $pdo = Database::getInstance()->getConnection();
+    $siteContentModel = new SiteContent($pdo);
+    $sections = $siteContentModel->getSectionsByPage('about');
+} catch (Throwable $e) {
+    $loadError = 'About content is temporarily unavailable.';
+}
 $map = [];
 foreach ($sections as $section) {
     $map[$section['section_key']] = $section;
@@ -21,6 +26,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 <section class="section-block">
     <div class="container about-grid">
+        <?php if ($loadError): ?><div class="alert error"><?= e($loadError); ?></div><?php endif; ?>
         <div class="about-image-wrap">
             <img src="<?= e(app_url($intro['image'] ?? 'assets/images/kaona-profile.jpg')); ?>" alt="About <?= e(APP_NAME); ?>" class="about-image">
         </div>

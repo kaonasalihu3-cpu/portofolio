@@ -3,16 +3,27 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config/config.php';
 
-$pdo = Database::getInstance()->getConnection();
-$siteContentModel = new SiteContent($pdo);
-$productModel = new Product($pdo);
-$newsModel = new News($pdo);
+$hero = null;
+$aboutPreview = null;
+$cta = null;
+$featuredProducts = [];
+$latestNews = [];
+$loadError = null;
 
-$hero = $siteContentModel->getSection('home', 'hero');
-$aboutPreview = $siteContentModel->getSection('home', 'about_preview');
-$cta = $siteContentModel->getSection('home', 'cta');
-$featuredProducts = $productModel->getFeatured(3);
-$latestNews = $newsModel->getLatest(3);
+try {
+    $pdo = Database::getInstance()->getConnection();
+    $siteContentModel = new SiteContent($pdo);
+    $productModel = new Product($pdo);
+    $newsModel = new News($pdo);
+
+    $hero = $siteContentModel->getSection('home', 'hero');
+    $aboutPreview = $siteContentModel->getSection('home', 'about_preview');
+    $cta = $siteContentModel->getSection('home', 'cta');
+    $featuredProducts = $productModel->getFeatured(3);
+    $latestNews = $newsModel->getLatest(3);
+} catch (Throwable $e) {
+    $loadError = 'Some dynamic content could not be loaded right now.';
+}
 
 $pageTitle = 'Home | ' . APP_NAME;
 require_once __DIR__ . '/includes/header.php';
@@ -21,6 +32,7 @@ $error = flash_message('error');
 ?>
 <section class="hero-section">
     <div class="container hero-grid">
+        <?php if ($loadError): ?><div class="alert error"><?= e($loadError); ?></div><?php endif; ?>
         <?php if ($success): ?><div class="alert success"><?= e($success); ?></div><?php endif; ?>
         <?php if ($error): ?><div class="alert error"><?= e($error); ?></div><?php endif; ?>
         <div>

@@ -8,12 +8,18 @@ if ($slug === '') {
     redirect('news.php');
 }
 
-$pdo = Database::getInstance()->getConnection();
-$newsModel = new News($pdo);
-$post = $newsModel->findBySlug($slug);
+$post = null;
+$loadError = null;
+try {
+    $pdo = Database::getInstance()->getConnection();
+    $newsModel = new News($pdo);
+    $post = $newsModel->findBySlug($slug);
+} catch (Throwable $e) {
+    $loadError = 'News details are temporarily unavailable.';
+}
 
 if (!$post) {
-    Session::flash('error', 'News post not found.');
+    Session::flash('error', $loadError ?? 'News post not found.');
     redirect('news.php');
 }
 

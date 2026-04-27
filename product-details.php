@@ -8,12 +8,18 @@ if ($slug === '') {
     redirect('products.php');
 }
 
-$pdo = Database::getInstance()->getConnection();
-$productModel = new Product($pdo);
-$product = $productModel->findBySlug($slug);
+$product = null;
+$loadError = null;
+try {
+    $pdo = Database::getInstance()->getConnection();
+    $productModel = new Product($pdo);
+    $product = $productModel->findBySlug($slug);
+} catch (Throwable $e) {
+    $loadError = 'Product details are temporarily unavailable.';
+}
 
 if (!$product) {
-    Session::flash('error', 'Product not found.');
+    Session::flash('error', $loadError ?? 'Product not found.');
     redirect('products.php');
 }
 

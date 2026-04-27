@@ -3,9 +3,15 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config/config.php';
 
-$pdo = Database::getInstance()->getConnection();
-$newsModel = new News($pdo);
-$posts = $newsModel->getAll();
+$posts = [];
+$loadError = null;
+try {
+    $pdo = Database::getInstance()->getConnection();
+    $newsModel = new News($pdo);
+    $posts = $newsModel->getAll();
+} catch (Throwable $e) {
+    $loadError = 'News is temporarily unavailable.';
+}
 
 $pageTitle = 'News | ' . APP_NAME;
 require_once __DIR__ . '/includes/header.php';
@@ -16,6 +22,7 @@ require_once __DIR__ . '/includes/header.php';
             <h1>News & Updates</h1>
             <p class="muted">Latest platform and project announcements.</p>
         </div>
+        <?php if ($loadError): ?><div class="alert error"><?= e($loadError); ?></div><?php endif; ?>
         <div class="card-grid">
             <?php foreach ($posts as $item): ?>
                 <article class="card">
