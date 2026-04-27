@@ -52,6 +52,7 @@ require_once dirname(__DIR__) . '/includes/header.php';
             <a class="btn" href="<?= e(app_url('admin/news.php')); ?>">Manage News</a>
             <a class="btn" href="<?= e(app_url('admin/messages.php')); ?>">View Messages</a>
             <a class="btn" href="<?= e(app_url('admin/content.php')); ?>">Manage Content</a>
+            <a class="btn" href="<?= e(app_url('admin/logout.php')); ?>">Logout</a>
         </div>
     </div>
 </section>

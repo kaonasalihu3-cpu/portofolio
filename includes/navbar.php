@@ -20,8 +20,10 @@ $user = current_user();
             <?php else: ?>
                 <?php if (is_admin()): ?>
                     <a class="<?= e(active_nav('dashboard.php')); ?>" aria-current="<?= active_nav('dashboard.php') ? 'page' : 'false'; ?>" href="<?= e(app_url('admin/dashboard.php')); ?>">Dashboard</a>
+                    <a href="<?= e(app_url('admin/logout.php')); ?>">Logout</a>
+                <?php else: ?>
+                    <a href="<?= e(app_url('logout.php')); ?>">Logout</a>
                 <?php endif; ?>
-                <a href="<?= e(app_url('logout.php')); ?>">Logout</a>
             <?php endif; ?>
         </nav>
     </div>
